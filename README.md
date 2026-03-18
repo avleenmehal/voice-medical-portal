@@ -225,53 +225,6 @@ The `--reload` flag restarts the server automatically when you save a file. Remo
 
 ---
 
-## Running Tests
-
-Each module has its own test file. Run them from their individual directories to avoid Python path collisions between modules that share the filename `main.py`.
-
-```bash
-# Context
-cd modules/context && ../../.venv/bin/python -m pytest test_context.py -v && cd ../..
-
-# Scheduler
-cd modules/scheduler && ../../.venv/bin/python -m pytest test_scheduler.py -v && cd ../..
-
-# Notifications (unit tests — no real API calls)
-cd modules/notifications && ../../.venv/bin/python -m pytest test_notifications.py -v && cd ../..
-
-# Safety
-cd modules/safety && ../../.venv/bin/python -m pytest test_safety.py -v && cd ../..
-
-# AI Core
-cd modules/ai && ../../.venv/bin/python -m pytest test_ai.py -v && cd ../..
-
-# Voice
-cd modules/voice && ../../.venv/bin/python -m pytest test_voice.py -v && cd ../..
-```
-
-**Run all modules at once:**
-
-```bash
-for mod in context scheduler notifications safety ai voice; do
-  echo "=== $mod ===" && \
-  cd modules/$mod && \
-  ../../.venv/bin/python -m pytest test_*.py -q --ignore=test_email_live.py && \
-  cd ../..
-done
-```
-
-Expected: **76 passed** across all 6 modules.
-
-**Live email integration test** (actually sends an email via Resend):
-
-```bash
-export TEST_RECIPIENT=you@example.com
-cd modules/notifications
-../../.venv/bin/python -m pytest test_email_live.py -v -s
-```
-
----
-
 ## Module Reference
 
 ### AI Core (`modules/ai`)
